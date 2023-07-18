@@ -93,21 +93,28 @@ void DrawingPanel::OnPaint(wxPaintEvent& event) // repaint
         displayGameOver(dc);
     }
     dc.SetPen(wxColour(0, 234, 255));
-    dc.DrawLine(wxPoint(0, 0), wxPoint(this->GetSize().x, 0));
-    dc.DrawLine(wxPoint(0, 0), wxPoint(0, this->GetSize().y));
-    dc.DrawLine(wxPoint(0, this->GetSize().y - 1), wxPoint(this->GetSize().x, this->GetSize().y - 1));
-    dc.DrawLine(wxPoint(this->GetSize().x - 1, 0), wxPoint(this->GetSize().x - 1, this->GetSize().y));
+    dc.DrawLine(wxPoint(0, 0), wxPoint(GetSize().x, 0));
+    dc.DrawLine(wxPoint(0, 0), wxPoint(0, GetSize().y));
+    dc.DrawLine(wxPoint(0, GetSize().y - 2), wxPoint(GetSize().x, GetSize().y - 2));
+    dc.DrawLine(wxPoint(GetSize().x - 2, 0), wxPoint(GetSize().x - 2, GetSize().y));
 }
 
 void DrawingPanel::displayGameOver(wxPaintDC& dc)
 {
     dc.SetTextForeground(wxColour(0, 234, 255));
     dc.SetFont(wxFont(wxFontInfo(50).Family(wxFONTFAMILY_TELETYPE).Bold()));
-    wxString text = "G A M E  O V E R";
-    wxSize textSize = dc.GetTextExtent(text);
+    wxString gameover = "G A M E  O V E R";
+    wxSize textSize = dc.GetTextExtent(gameover);
     int x = (GetSize().GetWidth() - textSize.GetWidth()) / 2; 
     int y = (GetSize().GetHeight() - textSize.GetHeight()) / 2;  
-    dc.DrawText(text, x, y);
+    dc.DrawText(gameover, x, y);
+
+    dc.SetFont(wxFont(wxFontInfo(25).Family(wxFONTFAMILY_TELETYPE)));
+    wxString restartTip = "(space to restart)";
+    textSize = dc.GetTextExtent(restartTip);
+    x = (GetSize().GetWidth() - textSize.GetWidth()) / 2;
+    y = (GetSize().GetHeight() - textSize.GetHeight()) / 2;
+    dc.DrawText(restartTip, x, y + 75);
 }
 
 void DrawingPanel::restartGame()
